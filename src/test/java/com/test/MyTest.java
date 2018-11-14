@@ -11,7 +11,7 @@ class MyTest {
 	@Test
 	void test() throws DailyTimeFullException {
 		String token = AuthService.getInstance().nextAuth((byte) 0);
-		new YuYinUtil().generateYuYin(token, "宝宝你在干啥呀", "9", "4", null, null, "c:\\bbb.mp3");
+		new YuYinUtil().generateYuYin(token, "宝宝你在干啥呀", "9", "4", null, null, "e:\\bbb.mp3");
 	}
 
 }
