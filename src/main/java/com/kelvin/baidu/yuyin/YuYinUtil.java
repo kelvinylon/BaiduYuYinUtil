@@ -1,5 +1,6 @@
 package com.kelvin.baidu.yuyin;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +34,7 @@ public class YuYinUtil {
 	 * @param token 百度token
 	 * @param text  发音文本
 	 * @param vol   音量 0-15
-	 * @param per   发音人 0、1、3、4
+	 * @param per   发音人 0-普通女声、1-普通男声、3-度逍遥、4度丫丫
 	 * @param spd   语速 0-15
 	 * @param aue   格式 3为mp3格式(默认)； 4为pcm-16k；5为pcm-8k；6为wav（内容同pcm-16k）;
 	 *              注意aue=4或者6是语音识别要求的格式，但是音频内容不是语音识别要求的自然人发音，所以识别效果会受影响。
@@ -123,6 +124,14 @@ public class YuYinUtil {
 				throw new RuntimeException("错误：contentType为json，此请求的contentType应为音频文件");
 			}
 			InputStream contentIn = respEntity.getContent();
+			File outFile = new File(outputFile);
+			if(!outFile.getParentFile().exists()) {
+				boolean b = outFile.getParentFile().mkdirs();
+				if(!b) {
+					throw new RuntimeException("创建父文件夹失败");
+				}
+			}
+			
 			FileOutputStream fout = new FileOutputStream(outputFile);
 			try {
 				IOUtils.copy(contentIn, fout);
