@@ -41,7 +41,7 @@ public class YuYinUtil {
 	 * @throws UnsupportedEncodingException
 	 */
 	@SuppressWarnings("deprecation")
-	public void generateYuYin(String token, String text, String vol, String per, String spd, String aue,
+	public void generateYuYin(String token, String text, String vol, String per, String spd, String pit, String aue,
 			String outputFile) {
 
 		logger.debug("调用语音合成接口");
@@ -49,6 +49,7 @@ public class YuYinUtil {
 		logger.debug("vol:" + vol);
 		logger.debug("per:" + per);
 		logger.debug("spd:" + spd);
+		logger.debug("pit:" + pit);
 		logger.debug("aue:" + aue);
 
 		CloseableHttpClient httpClient = HttpClients.createMinimal();
@@ -95,6 +96,11 @@ public class YuYinUtil {
 		// spd 语速 0-15
 		if (spd != null) {
 			params.add(new BasicNameValuePair("spd", spd));
+		}
+		
+		// pit 语调
+		if(pit != null) {
+			params.add(new BasicNameValuePair("pit", pit));
 		}
 
 		// aue 3为mp3格式(默认)； 4为pcm-16k；5为pcm-8k；6为wav（内容同pcm-16k）;
@@ -151,7 +157,7 @@ public class YuYinUtil {
 	}
 
 	public void generateYuYin(String token, String text, String outputFile) {
-		generateYuYin(token, text, null, null, null, null, outputFile);
+		generateYuYin(token, text, null, null, null, null, null, outputFile);
 	}
 
 	/**
